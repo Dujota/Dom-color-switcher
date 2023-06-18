@@ -10,25 +10,66 @@
 
 const colorSelector = document.querySelectorAll(`a`)
 const mainPage = document.querySelector(`body`)
+const sliderInput = document.querySelector(`input`)
 
-// Higher Order Functions
-const updateCss = (background, textColor) => {
-  mainPage.style.background = background
-  mainPage.style.color = textColor
+let currentPrimaryBackgroundColor = 'white'
+
+// Higer Order Functions
+
+const convertToDecimal = () => {
+  let inputNumber = sliderInput.value
+  let decimal = inputNumber / 100
+  return decimal
 }
 
-const changeColor = link => {
-  let linkColor = link.target.attributes.class.textContent
-  if (linkColor == `red`) {
-    updateCss(`red`, `white`)
-  } else if (linkColor === `white`) {
-    updateCss(`white`, `black`)
-  } else if (linkColor === `blue`) {
-    updateCss(`blue`, `white`)
+const updateCss = (primaryBackgroundColor = '') => {
+  if (!primaryBackgroundColor) {
+    primaryBackgroundColor = currentPrimaryBackgroundColor
+  }
+
+  let transparency = convertToDecimal()
+
+  const colorToBackgroundAndTextColor = {
+    red: {
+      backgroundColor: `rgba(250,0,0,${transparency})`,
+      textColor: 'white'
+    },
+    white: {
+      backgroundColor: `rgba(0,0,0,${transparency})`,
+      textColor: 'black'
+    },
+    blue: {
+      backgroundColor: `rgba(0,0,250,${transparency})`,
+      textColor: 'white'
+    },
+    yellow: {
+      backgroundColor: `rgba(250,250,0,${transparency})`,
+      textColor: 'black'
+    }
+  }
+
+  const { backgroundColor, textColor } = colorToBackgroundAndTextColor[
+    primaryBackgroundColor
+  ]
+
+  mainPage.style.background = backgroundColor
+  mainPage.style.color = textColor
+
+  currentPrimaryBackgroundColor = primaryBackgroundColor
+}
+
+const onColorChangeEvent = event => {
+  const isRangeElement = event.target.type === 'range'
+
+  if (isRangeElement) {
+    updateCss()
   } else {
-    updateCss(`yellow`, `black`)
+    updateCss(event.target.attributes.class.textContent)
   }
 }
 
 // Event Listeners
-colorSelector.forEach(link => link.addEventListener(`click`, changeColor))
+colorSelector.forEach(link =>
+  link.addEventListener(`click`, onColorChangeEvent)
+)
+sliderInput.addEventListener(`change`, onColorChangeEvent)

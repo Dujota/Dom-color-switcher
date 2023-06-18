@@ -20,6 +20,16 @@ h1 {
   line-height: 1.25;
   margin: 1em 0 0;
 }
+
+hr {
+  border-top: 1px dashed grey;
+}
+
+input {
+  position: relative;
+  transform: scale(2); /* Or however big you want it */
+  transform-origin: 0 0;
+}
 p {
   margin: 0.5em 0;
 }
@@ -46,3 +56,4 @@ p {
 .yellow {
   background-color: yellow;
 }
+
