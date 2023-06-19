@@ -56,4 +56,12 @@ p {
 .yellow {
   background-color: yellow;
 }
+.random {
+  background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);
+}
+.flower {
+  background-image: url("https://www.johnnyseeds.com/dw/image/v2/BJGJ_PRD/on/demandware.static/-/Sites-jss-master/default/dw5849c585/images/products/flowers/01814_01_sunrichorangesum.jpg?sw=800&cx=302&cy=0&cw=1196&ch=1196");
+  background-size: cover;
+}
+
 
