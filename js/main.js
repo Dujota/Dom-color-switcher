@@ -16,18 +16,18 @@ let currentPrimaryBackgroundColor = 'white'
 
 /* ********************* FUNCTIONS ******************** */
 
-const getTransparencyFromSlider = () => {
+const getValueFromSlider = () => {
   let inputNumber = sliderInput.value
   let decimal = inputNumber / 100
   return decimal
 }
 
-const randomRGB = () => {
+const getRandomRGBCode = () => {
     const colorCode = Math.floor(Math.random() * 256);
     return colorCode;
 }
 
-const flowerPNG = () => {
+const getRandomFlowerImage = () => {
   let images = [
     'https://orchidya.com/wp-content/uploads/2022/02/Orchidya-London-Flower-Shop-London-Delivery-Strawberry-Cream-2.jpeg',
     'https://images.pexels.com/photos/113535/pexels-photo-113535.jpeg?w=1200&h=627&auto=compress&cs=tinysrgb',
@@ -47,38 +47,40 @@ const updateCss = (primaryBackgroundColor) => {
   if (!primaryBackgroundColor) {
     primaryBackgroundColor = currentPrimaryBackgroundColor
   }
-  let transparency = getTransparencyFromSlider()
+
+  let backgroundTransparency = getValueFromSlider()
   let overrideTextColor = null;
-  if ((primaryBackgroundColor === `white` || primaryBackgroundColor === `blue` || primaryBackgroundColor === `red`) && (transparency < 0.4)) {
+
+  if ((primaryBackgroundColor === `white` || primaryBackgroundColor === `blue` || primaryBackgroundColor === `red`) && (backgroundTransparency < 0.4)) {
     overrideTextColor = `black`
   }
-  else if ((primaryBackgroundColor === `white` || primaryBackgroundColor === `random`) && (transparency > 0.8)) {
+  else if ((primaryBackgroundColor === `white` || primaryBackgroundColor === `random`) && (backgroundTransparency > 0.8)) {
     overrideTextColor =  `white`
   }
 
   const colorToBackgroundAndTextColor = {
     red: {
-      backgroundColor: `rgba(250,0,0,${transparency})`,
+      backgroundColor: `rgba(250,0,0,${backgroundTransparency})`,
       textColor: overrideTextColor || `white`
     },
     white: {
-      backgroundColor: `rgba(0,0,0,${transparency})`,
+      backgroundColor: `rgba(0,0,0,${backgroundTransparency})`,
       textColor: overrideTextColor || `black`
     },
     blue: {
-      backgroundColor: `rgba(0,0,250,${transparency})`,
+      backgroundColor: `rgba(0,0,250,${backgroundTransparency})`,
       textColor: overrideTextColor || `white`
     },
     yellow: {
-      backgroundColor: `rgba(250,250,0,${transparency})`,
+      backgroundColor: `rgba(250,250,0,${backgroundTransparency})`,
       textColor: 'black'
     },
     random: {
-      backgroundColor: `rgba(${randomRGB()},${randomRGB()},${randomRGB()},${transparency})`,
+      backgroundColor: `rgba(${getRandomRGBCode()},${getRandomRGBCode()},${getRandomRGBCode()},${backgroundTransparency})`,
       textColor: overrideTextColor || 'black'
     },
     flower: {
-      backgroundColor: `url(${flowerPNG()})`,
+      backgroundColor: `url(${getRandomFlowerImage()})`,
       textColor: `black`
     }
   }
@@ -117,7 +119,7 @@ const onColorChangeEvent = event => {
 colorSelector.forEach(link =>
   link.addEventListener(`click`, onColorChangeEvent)
 )
-sliderInput.addEventListener(`change`, onColorChangeEvent)
+sliderInput.addEventListener(`input`, onColorChangeEvent)
 
 /* ************** END EVENT LISTENERS **************** */
 
