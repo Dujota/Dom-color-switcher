@@ -52,7 +52,7 @@ const updateCss = (primaryBackgroundColor) => {
   if ((primaryBackgroundColor === `white` || primaryBackgroundColor === `blue` || primaryBackgroundColor === `red`) && (transparency < 0.4)) {
     overrideTextColor = `black`
   }
-  else if ((primaryBackgroundColor === `white`) && (transparency > 0.8)) {
+  else if ((primaryBackgroundColor === `white` || primaryBackgroundColor === `random`) && (transparency > 0.8)) {
     overrideTextColor =  `white`
   }
 
@@ -75,7 +75,7 @@ const updateCss = (primaryBackgroundColor) => {
     },
     random: {
       backgroundColor: `rgba(${randomRGB()},${randomRGB()},${randomRGB()},${transparency})`,
-      textColor: 'black'
+      textColor: overrideTextColor || 'black'
     },
     flower: {
       backgroundColor: `url(${flowerPNG()})`,
