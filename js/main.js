@@ -6,9 +6,10 @@
  * select multiple elements by class or tag  - querySelectorAll
  */
 
-const colorSelector = document.querySelectorAll(`a`)
+const colorSelectors = document.querySelectorAll(`a`)
 const mainPage = document.querySelector(`body`)
 const sliderInput = document.querySelector(`input`)
+const pageTextSelectors = document.querySelectorAll(`h1, p`)
 
 /* ************** END ELEMENT SELECTORS **************** */
 
@@ -80,25 +81,42 @@ const updateCss = (primaryBackgroundColor) => {
       textColor: overrideTextColor || 'black'
     },
     flower: {
-      backgroundColor: `url(${getRandomFlowerImage()})`,
+      backgroundImage: `url(${getRandomFlowerImage()})`,
+      backgroundSize: `cover`,
       textColor: `black`
+      
     }
   }
 
-  const { backgroundColor, textColor } = colorToBackgroundAndTextColor[
+  const { backgroundColor, textColor, backgroundImage, backgroundSize } = colorToBackgroundAndTextColor[
     primaryBackgroundColor
   ]
 
-  if (primaryBackgroundColor === `flower`) {
-    mainPage.style.backgroundImage = backgroundColor
-    mainPage.style.color = textColor
-    mainPage.style.backgroundSize = `cover`
+  mainPage.style.backgroundImage = backgroundImage;
+  mainPage.style.backgroundSize = backgroundSize;
+  mainPage.style.background = backgroundColor;
+  mainPage.style.color = textColor;
+
+  if(primaryBackgroundColor === `flower`){
+    pageTextSelectors.forEach(element => {
+      element.style.borderRadius = `25px`
+      element.style.padding = `10px`
+      element.style.background = `white`
+    })
+  } else{
+    pageTextSelectors.forEach(element => {
+      element.style.borderRadius = null
+      element.style.padding = null
+      element.style.background = null
+    })
   }
-  else {
-    mainPage.style.background = backgroundColor
-    mainPage.style.color = textColor
-  }
-  
+
+   
+  // headerSelectors.forEach(header =>
+  //   linkstyle.padding = `10px`
+  // paragraphSelectors.style.borderRadius = `25px`
+  // paragraphSelectors.style.padding = `10px`
+
   currentPrimaryBackgroundColor = primaryBackgroundColor
 }
 
@@ -116,7 +134,7 @@ const onColorChangeEvent = event => {
 
 /* ***************** EVENT LISTENERS ***************** */
 
-colorSelector.forEach(link =>
+colorSelectors.forEach(link =>
   link.addEventListener(`click`, onColorChangeEvent)
 )
 sliderInput.addEventListener(`input`, onColorChangeEvent)
