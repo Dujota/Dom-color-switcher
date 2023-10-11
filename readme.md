@@ -1,4 +1,4 @@
-### JSDR 213
+### JSDR
 
 # DOM Color Scheme Switcher
 
